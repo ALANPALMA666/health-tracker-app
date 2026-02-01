@@ -1,158 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="description" content="Track your daily health metrics, meals, and get AI-powered recommendations">
+    <meta name="keywords" content="health, fitness, tracker, nutrition, wellness">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#667eea">
-    <title>Health Tracker</title>
+    <meta name="theme-color" content="#4F46E5">
+    <title>VitaFlow | AI-Powered Health Optimization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Health Tracker">
+    <meta name="apple-mobile-web-app-title" content="VitaFlow">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏃‍♂️ Health Tracker</h1>
-            <nav id="nav">
-                <button id="loginBtn">Login</button>
-                <button id="registerBtn">Register</button>
-                <button id="logoutBtn" style="display:none;">Logout</button>
-            </nav>
-        </header>
-
-        <main>
-            <!-- Auth Forms -->
-            <div id="authSection">
-                <div id="loginForm" class="form-container">
-                    <h2>Login</h2>
-                    <form>
-                        <input type="email" id="loginEmail" placeholder="Email" required>
-                        <input type="password" id="loginPassword" placeholder="Password" required>
-                        <button type="submit">Login</button>
-                    </form>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-heartbeat"></i>
                 </div>
-
-                <div id="registerForm" class="form-container" style="display:none;">
-                    <h2>Register</h2>
-                    <form>
-                        <input type="text" id="registerUsername" placeholder="Username" required>
-                        <input type="email" id="registerEmail" placeholder="Email" required>
-                        <input type="password" id="registerPassword" placeholder="Password" required>
-                        
-                        <h3>Health Information</h3>
-                        <input type="number" id="age" placeholder="Age" required>
-                        <input type="number" id="weight" placeholder="Weight (kg)" required>
-                        <input type="number" id="height" placeholder="Height (cm)" required>
-                        <select id="gender" required>
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                        <select id="activityLevel" required>
-                            <option value="">Activity Level</option>
-                            <option value="sedentary">Sedentary</option>
-                            <option value="light">Light</option>
-                            <option value="moderate">Moderate</option>
-                            <option value="active">Active</option>
-                            <option value="very_active">Very Active</option>
-                        </select>
-                        
-                        <button type="submit">Register</button>
-                    </form>
+                <div>
+                    <div class="logo-text">VitaFlow</div>
+                    <div class="logo-tagline">AI Health Optimization</div>
                 </div>
-
-                <div class="guest-section">
-                    <button id="guestBtn" class="guest-btn">Continue as Guest</button>
+            </a>
+            
+            <div class="user-nav">
+                <div class="notification-bell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
                 </div>
-            </div>
-
-            <!-- Dashboard -->
-            <div id="dashboard" style="display:none;">
-                <div class="dashboard-tabs">
-                    <button class="tab-btn active" data-tab="overview">Overview</button>
-                    <button class="tab-btn" data-tab="daily-log">Daily Log</button>
-                    <button class="tab-btn" data-tab="meal-plan">Meal Plan</button>
-                    <button class="tab-btn" data-tab="analytics">Analytics</button>
-                    <button class="tab-btn" data-tab="ai-chat">AI Assistant</button>
-                </div>
-
-                <!-- Overview Tab -->
-                <div id="overview" class="tab-content active">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Today's Calories</h3>
-                            <div class="stat-value" id="todayCalories">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Steps</h3>
-                            <div class="stat-value" id="todaySteps">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Water (L)</h3>
-                            <div class="stat-value" id="todayWater">0</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Sleep (hrs)</h3>
-                            <div class="stat-value" id="todaySleep">0</div>
+                
+                <div class="user-profile">
+                    <div class="user-avatar">JS</div>
+                    <div class="user-info">
+                        <div class="user-name">John Smith</div>
+                        <div class="user-status">
+                            <span class="status-dot"></span>
+                            <span>Healthy • Score: 87</span>
                         </div>
                     </div>
+                    <i class="fas fa-chevron-down" style="font-size: 12px; color: var(--neutral-500);"></i>
                 </div>
+            </div>
+        </div>
+    </header>
 
-                <!-- Daily Log Tab -->
-                <div id="daily-log" class="tab-content">
-                    <div class="log-form">
-                        <h3>Log Today's Data</h3>
-                        <input type="number" id="logCalories" placeholder="Calories">
-                        <input type="number" id="logSteps" placeholder="Steps">
-                        <input type="number" id="logWater" placeholder="Water Intake (L)">
-                        <input type="number" id="logSleep" placeholder="Sleep Hours">
-                        <button id="saveLog">Save Log</button>
+    <!-- Main Content -->
+    <main class="container">
+        <div class="dashboard">
+            <!-- Health Overview -->
+            <section class="card health-overview">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-chart-line"></i> Health Overview</h2>
+                    <div class="card-actions">
+                        <button class="icon-btn" title="Refresh">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="health-score">
+                    <div class="score-circle">
+                        <canvas id="healthScoreChart"></canvas>
+                        <div class="score-value" id="todayScore">87</div>
+                    </div>
+                    <div class="score-label">Overall Health Score</div>
+                    <div class="score-change">+2.5% from last week</div>
+                </div>
+                
+                <div class="health-metrics">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-name">Calories</div>
+                            <i class="fas fa-utensils" style="color: var(--secondary);"></i>
+                        </div>
+                        <div class="metric-value" id="todayCalories">1,850</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 75%; background: var(--secondary);"></div>
+                        </div>
                     </div>
                     
-                    <div class="meals-section">
-                        <h3>Add Meal</h3>
-                        <input type="text" id="mealName" placeholder="Meal Name">
-                        <input type="number" id="mealCalories" placeholder="Calories">
-                        <input type="number" id="mealCarbs" placeholder="Carbs (g)">
-                        <input type="number" id="mealProtein" placeholder="Protein (g)">
-                        <input type="number" id="mealFat" placeholder="Fat (g)">
-                        <input type="time" id="mealTime">
-                        <button id="addMeal">Add Meal</button>
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-name">Steps</div>
+                            <i class="fas fa-running" style="color: var(--info);"></i>
+                        </div>
+                        <div class="metric-value" id="todaySteps">8,500</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 85%; background: var(--info);"></div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Meal Plan Tab -->
-                <div id="meal-plan" class="tab-content">
-                    <div class="meal-plan-header">
-                        <h3>Today's Meal Plan</h3>
-                        <button id="generateMealPlan">Generate New Plan</button>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-name">Water (L)</div>
+                            <i class="fas fa-tint" style="color: var(--info);"></i>
+                        </div>
+                        <div class="metric-value" id="todayWater">2.1</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 75%; background: var(--info);"></div>
+                        </div>
                     </div>
-                    <div id="mealPlanContent"></div>
-                </div>
-
-                <!-- Analytics Tab -->
-                <div id="analytics" class="tab-content">
-                    <h3>Weekly Analytics</h3>
-                    <div id="analyticsChart"></div>
-                </div>
-
-                <!-- AI Chat Tab -->
-                <div id="ai-chat" class="tab-content">
-                    <div class="chat-container">
-                        <div id="chatMessages"></div>
-                        <div class="chat-input">
-                            <input type="text" id="chatInput" placeholder="Ask your AI health assistant...">
-                            <button id="sendMessage">Send</button>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <div class="metric-name">Sleep (hrs)</div>
+                            <i class="fas fa-moon" style="color: var(--accent);"></i>
+                        </div>
+                        <div class="metric-value" id="todaySleep">7.5</div>
+                        <div class="metric-progress">
+                            <div class="progress-bar" style="width: 82%; background: var(--accent);"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
+            </section>
 
-    <script src="script.js"></script>
+            <!-- AI Assistant -->
+            <section class="card ai-assistant">
+                <div class="ai-header">
+                    <div class="ai-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-info">
+                        <h3>Vita AI Assistant</h3>
+                        <p>Ready to optimize your health</p>
+                    </div>
+                </div>
+                
+                <div class="ai-message">
+                    <p id="aiResponse">Hello! I notice you've been consistent with your workouts. Would you like me to adjust your meal plan for better muscle recovery?</p>
+                </div>
+                
+                <div class="ai-input-container">
+                    <input type="text" class="ai-input" id="chatInput" placeholder="Ask me anything about your health...">
+                    <button class="ai-send-btn" id="sendMessage">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <div class="ai-suggestions">
+                    <div class="suggestion-tags">
+                        <span class="suggestion-tag">Generate meal plan</span>
+                        <span class="suggestion-tag">Workout suggestions</span>
+                        <span class="suggestion-tag">Sleep tips</span>
+                        <span class="suggestion-tag">Progress report</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meal Planner -->
+            <section class="card meal-planner">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-calendar-alt"></i> Today's Meal Plan</h2>
+                    <div class="card-actions">
+                        <button class="icon-btn" id="generateMealPlan" title="Generate new plan">
+                            <i class="fas fa-magic"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="meal-tabs">
+                    <div class="meal-tab active" data-tab="all">All Meals</div>
+                    <div class="meal-tab" data-tab="breakfast">Breakfast</div>
+                    <div class="meal-tab" data-tab="lunch">Lunch</div>
+                    <div class="meal-tab" data-tab="dinner">Dinner</div>
+                </div>
+                
+                <div class="meal-list" id="mealPlanContent">
+                    <div class="meal-item">
+                        <div class="meal-icon">
+                            <i class="fas fa-egg"></i>
+                        </div>
+                        <div class="meal-details">
+                            <div class="meal-name">Protein Oatmeal Bowl</div>
+                            <div class="meal-macros">
+                                <div class="macro-item">
+                                    <span class="macro-dot macro-carbs"></span>
+                                    <span>45g carbs</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-dot macro-protein"></span>
+                                    <span>25g protein</span>
+                                </div>
+                                <div class="macro-item">
+                                    <span class="macro-dot macro-fat"></span>
+                                    <span>8g fat</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="meal-calories">350 kcal</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Activity Tracker -->
+            <section class="card activity-tracker">
+                <div class="activity-header">
+                    <h2 class="card-title"><i class="fas fa-running"></i> Activity Tracker</h2>
+                    <div class="activity-period">
+                        <button class="period-btn active">Week</button>
+                        <button class="period-btn">Month</button>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <div class="actions-grid">
+                    <button class="action-btn" id="logMeal">
+                        <div class="action-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="action-label">Log Meal</div>
+                        <div class="action-desc">Track nutrition</div>
+                    </button>
+                    
+                    <button class="action-btn" id="addWorkout">
+                        <div class="action-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="action-label">Add Workout</div>
+                        <div class="action-desc">Track exercise</div>
+                    </button>
+                    
+                    <button class="action-btn" id="logWater">
+                        <div class="action-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="action-label">Log Water</div>
+                        <div class="action-desc">Stay hydrated</div>
+                    </button>
+                    
+                    <button class="action-btn" id="logSleep">
+                        <div class="action-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="action-label">Log Sleep</div>
+                        <div class="action-desc">Track rest</div>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script-optimized.js"></script>
+    <!-- Add this before </body> -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button onclick="downloadApp()" style="background: linear-gradient(135deg, #4F46E5, #8B5CF6); color: white; border: none; padding: 15px 25px; border-radius: 25px; font-weight: 600; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-download"></i>
+        Install App
+    </button>
+</div>
+
+<script>
+function downloadApp() {
+    // Create a downloadable HTML file
+    const element = document.createElement('a');
+    const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+    element.href = URL.createObjectURL(file);
+    element.download = 'VitaFlow-Health-App.html';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+    
+    // Show instructions
+    alert('App downloaded! Open Files app → Downloads → Tap VitaFlow-Health-App.html');
+}
+</script>
 </body>
 </html>

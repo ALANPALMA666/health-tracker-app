@@ -270,12 +270,7 @@ async function loadMealPlan() {
     const today = new Date().toISOString().split('T')[0];
     
     try {
-        const response = await fetch(`${API_BASE}/meal-plans/${today}`, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-        
+        const response = await fetch(`${API_BASE}/meal-plans/${today}`);
         const data = await response.json();
         const mealPlanContent = document.getElementById('mealPlanContent');
         
@@ -296,6 +291,7 @@ async function loadMealPlan() {
         }
     } catch (error) {
         console.error('Failed to load meal plan:', error);
+        document.getElementById('mealPlanContent').innerHTML = '<p>Failed to load meal plan. Please try again.</p>';
     }
 }
 
@@ -356,16 +352,20 @@ async function sendChatMessage() {
         const response = await fetch(`${API_BASE}/ai/chat`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ message })
         });
         
         const data = await response.json();
         
-        // Add AI response
-        chatMessages.innerHTML += `<div class="message ai">AI: ${data.response}</div>`;
+        if (response.ok) {
+            // Add AI response
+            chatMessages.innerHTML += `<div class="message ai">AI: ${data.response}</div>`;
+        } else {
+            chatMessages.innerHTML += `<div class="message error">Error: ${data.error}</div>`;
+        }
+        
         chatMessages.scrollTop = chatMessages.scrollHeight;
     } catch (error) {
         chatMessages.innerHTML += `<div class="message error">Error: Failed to get AI response</div>`;
