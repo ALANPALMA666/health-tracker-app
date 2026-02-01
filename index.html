@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <title>Health Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Health Tracker">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏃‍♂️ Health Tracker</h1>
+            <nav id="nav">
+                <button id="loginBtn">Login</button>
+                <button id="registerBtn">Register</button>
+                <button id="logoutBtn" style="display:none;">Logout</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Auth Forms -->
+            <div id="authSection">
+                <div id="loginForm" class="form-container">
+                    <h2>Login</h2>
+                    <form>
+                        <input type="email" id="loginEmail" placeholder="Email" required>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+
+                <div id="registerForm" class="form-container" style="display:none;">
+                    <h2>Register</h2>
+                    <form>
+                        <input type="text" id="registerUsername" placeholder="Username" required>
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                        
+                        <h3>Health Information</h3>
+                        <input type="number" id="age" placeholder="Age" required>
+                        <input type="number" id="weight" placeholder="Weight (kg)" required>
+                        <input type="number" id="height" placeholder="Height (cm)" required>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <select id="activityLevel" required>
+                            <option value="">Activity Level</option>
+                            <option value="sedentary">Sedentary</option>
+                            <option value="light">Light</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="active">Active</option>
+                            <option value="very_active">Very Active</option>
+                        </select>
+                        
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+
+                <div class="guest-section">
+                    <button id="guestBtn" class="guest-btn">Continue as Guest</button>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard" style="display:none;">
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                    <button class="tab-btn" data-tab="daily-log">Daily Log</button>
+                    <button class="tab-btn" data-tab="meal-plan">Meal Plan</button>
+                    <button class="tab-btn" data-tab="analytics">Analytics</button>
+                    <button class="tab-btn" data-tab="ai-chat">AI Assistant</button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Today's Calories</h3>
+                            <div class="stat-value" id="todayCalories">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Steps</h3>
+                            <div class="stat-value" id="todaySteps">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Water (L)</h3>
+                            <div class="stat-value" id="todayWater">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Sleep (hrs)</h3>
+                            <div class="stat-value" id="todaySleep">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Log Tab -->
+                <div id="daily-log" class="tab-content">
+                    <div class="log-form">
+                        <h3>Log Today's Data</h3>
+                        <input type="number" id="logCalories" placeholder="Calories">
+                        <input type="number" id="logSteps" placeholder="Steps">
+                        <input type="number" id="logWater" placeholder="Water Intake (L)">
+                        <input type="number" id="logSleep" placeholder="Sleep Hours">
+                        <button id="saveLog">Save Log</button>
+                    </div>
+                    
+                    <div class="meals-section">
+                        <h3>Add Meal</h3>
+                        <input type="text" id="mealName" placeholder="Meal Name">
+                        <input type="number" id="mealCalories" placeholder="Calories">
+                        <input type="number" id="mealCarbs" placeholder="Carbs (g)">
+                        <input type="number" id="mealProtein" placeholder="Protein (g)">
+                        <input type="number" id="mealFat" placeholder="Fat (g)">
+                        <input type="time" id="mealTime">
+                        <button id="addMeal">Add Meal</button>
+                    </div>
+                </div>
+
+                <!-- Meal Plan Tab -->
+                <div id="meal-plan" class="tab-content">
+                    <div class="meal-plan-header">
+                        <h3>Today's Meal Plan</h3>
+                        <button id="generateMealPlan">Generate New Plan</button>
+                    </div>
+                    <div id="mealPlanContent"></div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div id="analytics" class="tab-content">
+                    <h3>Weekly Analytics</h3>
+                    <div id="analyticsChart"></div>
+                </div>
+
+                <!-- AI Chat Tab -->
+                <div id="ai-chat" class="tab-content">
+                    <div class="chat-container">
+                        <div id="chatMessages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="chatInput" placeholder="Ask your AI health assistant...">
+                            <button id="sendMessage">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
